@@ -1,0 +1,17 @@
+{
+  "name": "03_canvas_example",
+  "version": "1.0.0",
+  "description": "canvas example for javascript",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "canvas"
+  ],
+  "author": "vadim",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.3"
+  }
+}
