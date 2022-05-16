@@ -1,6 +1,6 @@
 Next important part!
 
-In order to security reason to save username, password, url locally on Mac environment (env) and not into in Git
+In order to security cloud server to save username, password, url locally on Mac environment (env) and not in GitHub
 
 Add to environment using command line on same with the application ’zsh’ or ’bash’ terminal
 
@@ -29,3 +29,5 @@ export MONGODB_URL=clusterName.some.mongodb.net
 2. Save parameters in env: source ~/.bash_profile
 
 3. Then you can check if it added by command: env
+
+4. !!! add into .gitignore '.env'
