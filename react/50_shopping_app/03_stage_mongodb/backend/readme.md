@@ -20,14 +20,14 @@ export MONGODB_URL=clusterName.some.mongodb.net
 
 BASH SHELL
 
-1. vim ~/.bash_profile and add next lines on the bottom
+1. 'vim ~/.bash_profile' and add next lines on the bottom
 
 export MONGODB_USER=someUser
 export MONGODB_PASSWORD=somePassword
 export MONGODB_URL=clusterName.some.mongodb.net
 
-2. Save parameters in env: source ~/.bash_profile
+2. Save parameters in env: 'source ~/.bash_profile'
 
 3. Then you can check if it added by command: env
 
-4. !!! add into .gitignore '.env'
+4. !!! add into .gitignore: '.env'

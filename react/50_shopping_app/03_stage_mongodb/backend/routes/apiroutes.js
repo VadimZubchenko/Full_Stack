@@ -1,5 +1,8 @@
+const { response } = require("express");
 const express = require("express");
-
+const item = require("../models/item");
+const itemModel = require("../models/item");
+const user = require("../models/user");
 let router = express.Router();
 
 //DATABASE
@@ -11,8 +14,14 @@ let id = 100;
 
 router.get("/shopping", function (req, res) {
   // here we personalize database for particular user
-  let tempDatabase = database.filter((item) => item.user === req.session.user);
-  return res.status(200).json(tempDatabase);
+  let query = { user: req.session.user };
+  itemModel.find(query, function (err, items) {
+    if (err) {
+      console.log("Error when querying item. Reason:", err);
+      return res.status(500).json({ message: "Internal server error" });
+    }
+    return res.status(200).json(items);
+  });
 });
 
 router.post("/shopping", function (req, res) {
@@ -23,37 +32,38 @@ router.post("/shopping", function (req, res) {
   if (!req.body.type) {
     return res.status(400).json({ message: "Bad request" });
   }
-  let item = {
+  let item = new itemModel({
     type: req.body.type,
     count: req.body.count,
     price: req.body.price,
-    id: id,
     user: req.session.user,
-  };
-  id++;
-  database.push(item);
-  return res.status(201).json(item);
+  });
+  item.save(function (err) {
+    if (err) {
+      console.log("Failed to save item. Reaon:", err);
+      return res.status(500).json({ message: "Internal server error" });
+    }
+    return res.status(201).json({ message: "succes" });
+  });
+  // muutettava mongondb kannalta, kun täässä emme käytetään id,
+  // in local version we used id++;
+  // eli poistettiin id ja luotiin virtuali id
 });
 
 router.delete("/shopping/:id", function (req, res) {
-  let tempId = parseInt(req.params.id, 10);
-  for (let i = 0; i < database.length; i++) {
-    if (tempId === database[i].id) {
-      if (req.session.user !== database[i].user) {
-        database.splice(i, 1);
-        return res
-          .status(409)
-          .json({ message: "You are not authorized to remove this item" });
+  itemModel.deleteOne(
+    { _id: req.params.id, user: req.session.user },
+    function (err) {
+      if (err) {
+        console.log("Failed to remove item. Reason:", err);
+        return res.status(500).json({ message: "Internal server error" });
       }
-      database.splice(i, 1);
-      return res.status(200).json({ message: "Success!" });
+      return res.status(200).json({ message: "success" });
     }
-  }
-  return res.status(404).json({ message: "not found" });
+  );
 });
 
 router.put("/shopping/:id", function (req, res) {
-  let tempId = parseInt(req.params.id, 10);
   if (!req.body) {
     return res.status(400).json({ message: "Bad request" });
   }
@@ -64,21 +74,19 @@ router.put("/shopping/:id", function (req, res) {
     type: req.body.type,
     count: req.body.count,
     price: req.body.price,
-    id: tempId,
     user: req.session.user,
   };
-  for (let i = 0; i < database.length; i++) {
-    if (tempId === database[i].id) {
-      if (req.session.user !== database[i].user) {
-        return res
-          .status(409)
-          .json({ message: "You are not authorized to remove this item" });
+  itemModel.replaceOne(
+    { _id: req.params.id, user: req.session.user },
+    item,
+    function (err) {
+      if (err) {
+        console.log("Failed to remove item. Reason:", err);
+        return res.status(500).json({ message: "Internal server error" });
       }
-      database.splice(i, 1, item);
-      return res.status(200).json({ message: "Success!" });
+      return res.status(200).json({ message: "success" });
     }
-  }
-  return res.status(404).json({ message: "not found" });
+  );
 });
 
 module.exports = router;
