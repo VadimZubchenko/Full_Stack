@@ -1,8 +1,6 @@
-const { response } = require("express");
 const express = require("express");
-const item = require("../models/item");
 const itemModel = require("../models/item");
-const user = require("../models/user");
+
 let router = express.Router();
 
 //DATABASE

@@ -37,7 +37,7 @@ mongoose.set("toJSON", { virtuals: true });
 //sitten 'you will kick out from session!'
 let time_to_life_diff = 3600000;
 
-//HELPERS AND MIDDLWARE
+//HELPERS AND MIDDLWARiE
 
 createToken = () => {
   let token = crypto.randomBytes(128);
@@ -46,15 +46,15 @@ createToken = () => {
 // FILTER for DATABASE PASSING, check do you have key(token)
 isUserLogged = (req, res, next) => {
   if (!req.headers.token) {
-    return res.status(403).json({ message: "Forbidden 1!" });
+    return res.status(403).json({ message: "Forbidden_1!" });
   }
   sessionModel.findOne({ token: req.headers.token }, function (err, session) {
     if (err) {
       console.log("Error in finding session while if filter. Reason:", err);
-      return res.status(403).json({ message: "Forbidden" });
+      return res.status(403).json({ message: "Forbidden_2" });
     }
     if (!session) {
-      return res.status(403).json({ message: "Forbidden" });
+      return res.status(403).json({ message: "Forbidden_3" });
     }
     let now = Date.now();
     if (now > session.ttl) {
@@ -62,7 +62,7 @@ isUserLogged = (req, res, next) => {
         if (err) {
           console.log("Failed to remove expired session. Reason:", err);
         }
-        return res.status(403).json({ message: "Forbidden" });
+        return res.status(403).json({ message: "Forbidden_4" });
       });
     } else {
       req.session = {};

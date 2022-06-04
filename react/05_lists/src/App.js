@@ -14,8 +14,11 @@ function App() {
     contact.id = state.id;
     setState((state) => {
       return {
-        // contact return complite a new array
+        // concat: Combines two or more arrays.
+        // This method returns a new array
+        // without modifying any existing arrays.
         list: state.list.concat(contact),
+        id: state.id + 1,
       };
     });
   };

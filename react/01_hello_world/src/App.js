@@ -4,10 +4,10 @@ import HelloFunc from "./HelloFunc";
 
 // se on render funktio, se pitää palautta jotakin. Siinä on kaksi kieltä JS ja JSX
 function App() {
-  // first line is HelloWorld with original propers name ='World'
-  // second line with changed properte name="Vadim"
-  // third line is HelloFunc with original propers name ≈ 'Func'
-  // forth line with changed properte name="Erno"
+  // first line is HelloWorld with original propers name ='Class-based component'
+  // second line with changed properte name='Vadim'
+  // third line is HelloFunc with original propers name ≈ 'Function-based component'
+  // forth line with changed properte name='Erno'
   return (
     <div className="App">
       <HelloWorld />

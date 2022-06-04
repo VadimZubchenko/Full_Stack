@@ -7,18 +7,6 @@ const StatefulFunction = (props) => {
     seconds: 0,
     timerId: 0,
   });
-  // se treggoroi ja muodostaa tyhjän array
-  useEffect(() => {
-    let interval = setInterval(startTimer, 1000);
-    setState((state) => {
-      return {
-        // ... spread operator, kaikki loput parametrit muuttuu
-        ...state,
-        timerId: interval,
-      };
-    });
-    return () => clearInterval(interval);
-  }, []);
 
   const startTimer = () => {
     setState((state) => ({
@@ -26,6 +14,23 @@ const StatefulFunction = (props) => {
       seconds: state.seconds + 1,
     }));
   };
+
+  // sama kuin componentDidMount() in class,
+  // se treggoroi ja muodostaa tyhjän array
+  useEffect(() => {
+    let interval = setInterval(startTimer, 1000);
+    setState((state) => {
+      return {
+        // ... spread operator, kaikki array's loput parametrit muuttuu
+        // allows us to quickly copy all or part of an existing
+        // array or object into another array or object.
+        ...state,
+        timerId: interval,
+      };
+    });
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <h2>
       Function component says that you have been on this page for{" "}

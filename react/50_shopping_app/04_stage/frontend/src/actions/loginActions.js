@@ -1,5 +1,6 @@
-//Action types as constants
+import { getList, clearShoppingState } from "./shoppingActions";
 
+//Action types as constants
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 export const REGISTER_FAILED = "REGISTER_FAILED";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
@@ -46,6 +47,70 @@ export const register = (user) => {
   };
 };
 
+export const login = (user) => {
+  return async (dispatch) => {
+    let request = {
+      method: "POST",
+      mode: "cors",
+      headers: { "Content-type": "application/json" },
+      body: JSON.stringify(user),
+    };
+    dispatch(loading());
+    let response = await fetch("/login", request);
+    if (!response) {
+      dispatch(loginFailed("There was an error the connection. Login failed!"));
+    }
+    if (response.ok) {
+      let data = await response.json();
+      if (!data) {
+        dispatch(loginFailed("Error parsing login information. Login failed!"));
+      }
+      dispatch(loginSuccess(data.token));
+      loginFailed("Login ok:" + response.status);
+
+      dispatch(getList(data.token));
+    } else {
+      dispatch(
+        loginFailed(
+          "Login failed. Server responded with a status:" + response.status
+        )
+      );
+    }
+  };
+};
+
+export const logout = (token) => {
+  return async (dispatch) => {
+    let request = {
+      method: "POST",
+      mode: "cors",
+      headers: { "Content-type": "application/json", token: token },
+    };
+    dispatch(loading());
+    let response = await fetch("/logout", request);
+    if (!response) {
+      dispatch(
+        logoutFailed("There was an error with the connecion. Logging you out!")
+      );
+      dispatch(clearShoppingState());
+      return;
+    }
+    if (response.ok) {
+      dispatch(logoutSuccess());
+      dispatch(clearShoppingState());
+    } else {
+      dispatch(
+        logoutFailed(
+          "Server responded with a status " +
+            response.status +
+            ". Logging you out!"
+        )
+      );
+      dispatch(clearShoppingState());
+    }
+  };
+};
+
 //Action creators
 
 export const loading = () => {
@@ -65,9 +130,41 @@ const registerSuccess = () => {
   };
 };
 
-const registerFailed = (error) => {
+export const registerFailed = (error) => {
   return {
     type: REGISTER_FAILED,
     error: error,
+  };
+};
+
+const loginSuccess = (token) => {
+  return {
+    type: LOGIN_SUCCESS,
+    token: token,
+  };
+};
+
+const loginFailed = (error) => {
+  return {
+    type: LOGIN_FAILED,
+    error: error,
+  };
+};
+
+const logoutSuccess = () => {
+  return {
+    type: LOGIN_SUCCESS,
+  };
+};
+const logoutFailed = (error) => {
+  return {
+    type: LOGOUT_FAILED,
+    error: error,
+  };
+};
+
+export const clearLoginState = () => {
+  return {
+    type: CLEAR_LOGIN_STATE,
   };
 };

@@ -6,14 +6,22 @@ const NameForm = (props) => {
     firstname: "",
     lastname: "",
   });
-  // this is for writing text into input
+  // async button functiont, it triggers for writing text into inputi
+  // it will be call two times for name and surname seppartely
+  // where values goes to state via setState
   const onChange = (event) => {
+    // To access the fields in the event handler use
+    // the event.target.name and event.target.value.(not a id)
+    const name = event.target.name;
+    const value = event.target.value;
+    // setting new props into state
     setState((state) => {
       return {
-        // ... выражение объекта, которое будет расширяться в любом месте.
+        // ... helps to rewrite all values of useState's array list.
         ...state,
-        // this uses name of input, (not a id)
-        [event.target.name]: event.target.value,
+        // to update the state, use square brackets
+        // [bracket notation] around the property name.
+        [name]: value,
       };
     });
   };
@@ -26,7 +34,8 @@ const NameForm = (props) => {
     //it gives 'name' to the app.js via props
     props.setGreeting(name);
   };
-  // create two function for subimiting and for wrigthing value
+  // create two function for wrigthing(input, onChange, that change setState)
+  // and for subimiting value (input submit)
   return (
     <form onSubmit={onSubmit}>
       <label htmlFor="firstname">First Name:</label>
@@ -34,8 +43,8 @@ const NameForm = (props) => {
         type="text"
         name="firstname"
         id="firstname"
-        onChange={onChange}
         value={state.firstname}
+        onChange={onChange}
       />
       <br />
       <label htmlFor="lastname">Last Name</label>

@@ -18,10 +18,13 @@ const ContactForm = (props) => {
   // huom! se on formin eventti
   const onSubmit = (event) => {
     event.preventDefault();
+    // ...state kerätään kaikki olevat state:ssa arvot
+    // ja siirretään ne contact-objektiin.
     let contact = {
       ...state,
     };
     props.addContact(contact);
+    // nollataan state uudelleen
     setState({
       firstname: "",
       lastname: "",

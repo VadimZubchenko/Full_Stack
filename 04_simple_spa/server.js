@@ -12,8 +12,9 @@ let id = 100;
 app.use(express.static("public"));
 
 // using Express middleware to read json data
-app.use(express.json());
 // this is wrapp(express json) of app.use, check if the json-application
+app.use(express.json());
+
 // httml//localhost:3000/api/contact (/contact is useful for client identification)
 app.get("/api/contact", function (req, res) {
   //HTTP 200 the request has succeeded.
