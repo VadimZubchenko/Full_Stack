@@ -24,7 +24,7 @@ const ContactForm = (props) => {
       ...state,
     };
     props.addContact(contact);
-    // nollataan state uudelleen
+    // tyhjennetaan state uusiin käytöön
     setState({
       firstname: "",
       lastname: "",
