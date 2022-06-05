@@ -5,11 +5,16 @@ const ShoppingForm = (props) => {
     count: 0,
     price: 0,
   });
+
+  // All form includes two basic function:
+  // onChange() fetch new value ([name]: value) from input-element and move them into state, by setState
+  // onSubmit(), where just props.addContact(contact) will be changed. Form itself doesn’t change.
+
   const onChange = (event) => {
     setState((state) => {
       return {
         ...state,
-        [event.target.name]: event.target.value,
+        [event.target.name]: event.target.value, //get data from input
       };
     });
   };
@@ -18,7 +23,9 @@ const ShoppingForm = (props) => {
     let item = {
       ...state,
     };
+    // send inputed item data to parannt component App.js method addShoppinglist
     props.addShoppingItem(item);
+    // get empty state
     setState({
       type: "",
       count: 0,

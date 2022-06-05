@@ -1,4 +1,3 @@
-import logo from "./logo.svg";
 import "./App.css";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -11,7 +10,7 @@ function App() {
   });
 
   const increment = () => {
-    console.log("App - increment()");
+    console.log("App + increment()");
     // this is ACTION
     dispatch({
       type: "INCREMENT",
