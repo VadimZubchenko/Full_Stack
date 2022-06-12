@@ -4,12 +4,12 @@ import { useState } from "react";
 import EditRow from "./EditRow";
 
 const ShoppingList = (props) => {
-  // before cancel we need remove old one
+  // before canceling we need remove old one
   const [state, setState] = useState({
     removeIndex: -1,
     editIndex: -1,
   });
-
+  // when setState change state, then it triggers re-rendering
   const changeToRemoveMode = (index) => {
     setState({
       removeIndex: index,
@@ -38,7 +38,7 @@ const ShoppingList = (props) => {
     props.editItem(item);
     cancel();
   };
-
+  // items get list from parent component App.js
   let items = props.list.map((item, index) => {
     if (state.editIndex === index) {
       return (
@@ -60,7 +60,10 @@ const ShoppingList = (props) => {
         />
       );
     }
+    //pass here if state.index = -1 (no need any item neither edit or remove)
+    // Keys help React identify which items have changed (added/removed/re-ordered).
     return (
+      //'id' added into item[] array on server.js side
       <Row
         key={item.id}
         item={item}
@@ -81,6 +84,7 @@ const ShoppingList = (props) => {
           <th>Edit</th>
         </tr>
       </thead>
+      {/*here we put items data into JSX*/}
       <tbody>{items}</tbody>
     </table>
   );

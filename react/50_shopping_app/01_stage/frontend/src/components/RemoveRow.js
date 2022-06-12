@@ -11,8 +11,8 @@ const RemoveRow = (props) => {
       </td>
       <td>
         <button
-          className="btn btn-primary"
-          onClick={() => props.removeFromList(props.time.id)}
+          className="btn btn-success"
+          onClick={() => props.removeFromList(props.item.id)}
         >
           Confirm
         </button>

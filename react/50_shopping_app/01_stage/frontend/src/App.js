@@ -17,6 +17,11 @@ function App() {
     request: {},
     action: "",
   });
+  // very first loading send request to server and check if database has any item.
+  useEffect(() => {
+    if (state.list.length === 0) getShoppingList();
+  }, []);
+
   // useEffect equivalent of componentDidMount in class: place to make ajax requests
   useEffect(() => {
     const fetchData = async () => {
@@ -24,7 +29,7 @@ function App() {
         return;
       }
       // when method, esim. addShoppingItem updates urlRequest state, then it trigeres await fetch
-      //send url and reques type and odotan vastausta from local server.js esim. fetch(/api/shopping, post)
+      //send url, request type and action and waits a respond from local server.js esim. fetch(/api/shopping, post)
       let response = await fetch(urlRequest.url, urlRequest.request);
       if (response.ok) {
         switch (urlRequest.action) {
@@ -36,6 +41,8 @@ function App() {
             });
             return;
           case "additem":
+            //pass here if urlReques.action = additem
+            //and print all items into page
             getShoppingList();
             return;
           case "removeitem":
@@ -86,7 +93,8 @@ function App() {
   }, [urlRequest.url, urlRequest.request, urlRequest.action]);
 
   const getShoppingList = () => {
-    // this is change second 'urlRequest' state and trigger useEffect, fetch
+    // this is change second 'urlRequest' state and triggers useEffect, fetch
+    // here state being changed
     setUrlRequest({
       url: "/api/shopping",
       request: {
@@ -98,7 +106,9 @@ function App() {
     });
   };
   // after receiving the item data from children comp. ShoppongForm.js input
+  // this triggers useEffect, fetch
   const addShoppingItem = (item) => {
+    // here state being changed
     setUrlRequest({
       url: "/api/shopping",
       request: {
