@@ -4,14 +4,16 @@ import ShoppingForm from "./components/ShoppingForm";
 import ShoppingList from "./components/ShoppingList";
 import Navbar from "./components/Navbar";
 import { Routes, Route } from "react-router-dom";
-// muista että tähän ei kirjoita suoraan callBack,
-// koska tä render jo valmis muutokset
-// sen takian kutsutaan fetching kautta
+// remember not to call callBack directly here,
+// because this render already finished making changes
+// therefore called with fetch, see below
 function App() {
   // here two differents states (state and urlRequest)
+
   const [state, setState] = useState({
     list: [],
   });
+  // this state effects to useEffect below
   const [urlRequest, setUrlRequest] = useState({
     url: "",
     request: {},
@@ -20,8 +22,7 @@ function App() {
   // very first loading send request to server and check if database has any item.
   useEffect(() => {
     getShoppingList();
-    // [empty] the hook will only trigger once when the component is first rendered.
-  }, []);
+  }, []); // [empty] the hook will only trigger once when the component is first rendered.
 
   // useEffect equivalent of componentDidUpdate in class: place to make ajax requests
   useEffect(() => {
@@ -36,13 +37,15 @@ function App() {
         switch (urlRequest.action) {
           case "getlist":
             let data = await response.json();
-            // add responded data into first 'state'
+            // add responded data into first state:'state'
+            // setState tells React that the component and its children
+            // should be re-rendered with the updated state.
             setState({
               list: data,
             });
             return;
           case "additem":
-            //pass here if urlReques.action = additem
+            //passed here if urlReques.action = additem
             //and print all items into page
             getShoppingList();
             return;
