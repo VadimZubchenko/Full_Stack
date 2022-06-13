@@ -19,10 +19,11 @@ function App() {
   });
   // very first loading send request to server and check if database has any item.
   useEffect(() => {
-    if (state.list.length === 0) getShoppingList();
+    getShoppingList();
+    // [empty] the hook will only trigger once when the component is first rendered.
   }, []);
 
-  // useEffect equivalent of componentDidMount in class: place to make ajax requests
+  // useEffect equivalent of componentDidUpdate in class: place to make ajax requests
   useEffect(() => {
     const fetchData = async () => {
       if (!urlRequest.url) {

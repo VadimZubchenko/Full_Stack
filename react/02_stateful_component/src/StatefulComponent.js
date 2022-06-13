@@ -27,6 +27,8 @@ class StatefulComponent extends React.Component {
   // ComponentDidMount(). Called immediately after first successful render (ie.mounting)
   // with interval 1000 msec (1 s.)
   componentDidMount() {
+    // setInterval() is builded function within Node.js
+    // The `timer` module exposes a global API for scheduling functions to
     let interval = setInterval(() => this.startTimer(), 1000);
     this.setState({
       timerId: interval,

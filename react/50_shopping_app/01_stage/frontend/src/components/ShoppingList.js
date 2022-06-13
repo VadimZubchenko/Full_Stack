@@ -84,7 +84,7 @@ const ShoppingList = (props) => {
           <th>Edit</th>
         </tr>
       </thead>
-      {/*here we put items data into JSX*/}
+      {/*put items data into JSX via Row-component <tr><td>*/}
       <tbody>{items}</tbody>
     </table>
   );
