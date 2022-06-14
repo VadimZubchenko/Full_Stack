@@ -1,4 +1,7 @@
 const express = require("express");
+// using miniapp module (router as a module)
+//loads a middleware function in it, defines some routes,
+// and mounts the router module on a path in the main app.
 const apiroutes = require("./routes/apiroutes");
 //for changing a password to hash code
 const bcrypt = require("bcrypt");
@@ -7,7 +10,7 @@ const crypto = require("crypto");
 
 let app = express();
 
-app.use(express.json());
+app.use(express.json()); //built-in middleware
 
 const port = process.env.port || 3001;
 
@@ -15,15 +18,15 @@ const port = process.env.port || 3001;
 
 let registeredUsers = [];
 let loggedSessions = [];
-// 60.0 Minutes (mins) kun session kestää enemmään kuin tunti,
-//sitten 'you will kick out from session!'
+// 60.0 Minutes (mins) ,if session lasts more then hour,
+//then 'you will kick out from session!'
 let time_to_life_diff = 3600000;
 
 //HELPERS AND MIDDLWARE
 
 createToken = () => {
   let token = crypto.randomBytes(128);
-  return token.toString("hex");
+  return token.toString("hex"); //hexaluku 1..9A....F
 };
 // FILTER for DATABASE PASSING, check do you have key(token)
 isUserLogged = (req, res, next) => {
@@ -31,18 +34,22 @@ isUserLogged = (req, res, next) => {
     return res.status(403).json({ message: "Forbidden 1!" });
   }
   for (let i = 0; i < loggedSessions.length; i++) {
+    // check is session just token
     if (req.headers.token === loggedSessions[i].token) {
       let now = Date.now();
+      // check is session just time of session, which was put while login
       if (now > loggedSessions[i].ttl) {
+        //ttl: see below
         // delete session if time is out, splice remove 1 element from []
         loggedSessions.splice(i, 1);
         return res.status(403).json({ message: "Forbidden 2!" });
       }
-      // we reset timer and start from present time
+      //start session for api/- requests from present time
       loggedSessions[i].ttl = now + time_to_life_diff;
-      req.session = {};
-      req.session.user = loggedSessions[i].user;
-      return next();
+      req.session = {}; // loudaan session into req object
+      req.session.user = loggedSessions[i].user; // add session.user to req and give user name from loggedSession[]
+      //change turn to next middleware apiroutes see below
+      return next(); // return used to ensure that the execution stops after triggering the callback.
     }
   }
   return res.status(403).json({ message: "Forbidden 3!" });
@@ -76,6 +83,7 @@ app.post("/register", function (req, res) {
       return res.status(409).json({ message: "Username already in use" });
     }
   }
+  // changing a password to hash code
   bcrypt.hash(req.body.password, 14, function (err, hash) {
     if (err) {
       return res.status(500).json({ message: "Internal server error" });
@@ -91,7 +99,7 @@ app.post("/register", function (req, res) {
 });
 
 //here tartkistetaan username ja salasana
-//and make token for this session(username, token) of this particular user
+//and every time when user login we make token for this particular session(username, token) of this particular user
 app.post("/login", function (req, res) {
   //to check req.body empty or not in node ,express?
   if (!req.body) {
@@ -127,13 +135,14 @@ app.post("/login", function (req, res) {
           let now = Date.now();
           // create session username for 1 tuntti (3600000 ms)
           // there's no user password here, but own token for website
+          // session for this user leaves on server and just token is sent back
           let session = {
             user: req.body.username,
             token: token,
             ttl: now + time_to_life_diff,
           };
           loggedSessions.push(session);
-          return res.status(200).json({ token: token });
+          return res.status(200).json({ token: token }); // why two cause in session is token:token
         }
       );
       return;
@@ -156,7 +165,7 @@ app.post("/logout", function (req, res) {
 });
 
 //HELPERS
-// '/api' will be used just after check isUserlogged and apiroutes
+// when user wants to get from "/api", checking his req by calling esUserlogged(), if it ok 'return next()' => apiroutes.js
 app.use("/api", isUserLogged, apiroutes);
 
 app.listen(port);

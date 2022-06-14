@@ -15,7 +15,8 @@ const StatefulFunction = (props) => {
     }));
   };
 
-  // sama kuin componentDidMount() in class,
+  // it's a close replacement for 
+  // componentDidMount(), copmonentsDidUpdate, componentsWillUnmount in class,
   // se treggoroi ja muodostaa tyhjän array
   useEffect(() => {
     let interval = setInterval(startTimer, 1000);
@@ -28,6 +29,7 @@ const StatefulFunction = (props) => {
         timerId: interval,
       };
     });
+    // like componentWillUnmount() in class
     return () => clearInterval(interval);
   }, []);
 

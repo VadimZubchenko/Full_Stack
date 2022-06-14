@@ -1,9 +1,11 @@
 const express = require("express");
 
 let app = express();
+
 //express.json() is a built in middleware function
 // It parses incoming JSON requests and
 // puts the parsed data in req.body.
+
 app.use(express.json());
 
 //DATABASE which we set locally,
@@ -40,7 +42,7 @@ app.post("/api/shopping", function (req, res) {
 });
 
 app.delete("/api/shopping/:id", function (req, res) {
-  let tempId = parseInt(req.params.id, 10); //parse converts string to int
+  let tempId = parseInt(req.params.id, 10); //change json to int: parseInt converts string to int
   for (let i = 0; i < database.length; i++) {
     if (tempId === database[i].id) {
       database.splice(i, 1); // splice removes element from array
@@ -66,7 +68,7 @@ app.put("/api/shopping/:id", function (req, res) {
   };
   for (let i = 0; i < database.length; i++) {
     if (tempId === database[i].id) {
-      //item elements here to insert into the array in place of the deleted elements.
+      //'item'-elements here is a new one put in place of the removed item
       database.splice(i, 1, item);
       return res.status(200).json({ message: "Success!" });
     }

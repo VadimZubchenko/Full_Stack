@@ -6,9 +6,6 @@ import Navbar from "./components/Navbar";
 import LoginPage from "./LoginPage";
 import { Routes, Route, Navigate } from "react-router-dom";
 
-// muista että tähän ei kirjoita suoraan callBack,
-// koska tä render jo valmis muutokset
-// sen takian kutsutaan fetching kautta
 function App() {
   const [state, setState] = useState({
     list: [],
@@ -26,10 +23,13 @@ function App() {
   //STORAGE FUNCTIOINS
 
   useEffect(() => {
+    // for saving session on web-browser
     if (sessionStorage.getItem(state)) {
+      // it true after case "register" and setError's saveToStorage(tempState);
       let state = JSON.parse(sessionStorage.getItem("state"));
       setState(state);
       if (state.isLogged) {
+        //after case login, it loads the ShoppList very first time with token
         getShoppingList(state.token);
       }
     }
@@ -41,6 +41,7 @@ function App() {
 
   //APP STATE FUNCTIONS
 
+  //update state with 'loading' status: false or true
   const setLoading = (loading) => {
     setState((state) => {
       return {
@@ -79,7 +80,7 @@ function App() {
       if (!urlRequest.url) {
         return;
       }
-      setLoading(true);
+      setLoading(true); // messageArea shows <h4>Loading<h4> see below Condition rendering
       let response = await fetch(urlRequest.url, urlRequest.request);
       setLoading(false);
       if (response.ok) {
@@ -105,15 +106,17 @@ function App() {
             getShoppingList();
             return;
           case "register":
-            setError("Register success");
+            setError("Register success"); // methood upddates STATE with error: "Register succes" and first time saveToStorage see above
             return;
           case "login":
             let token = await response.json();
             setState((state) => {
+              // isLogged == true ,state.isLogged changes to true, see above
+              // which opens other tempRender page, see below
               let tempState = {
                 ...state,
                 isLogged: true,
-                token: token.token,
+                token: token.token, // token.token, cause in session is token:token
               };
               saveToStorage(tempState);
               return tempState;
@@ -185,6 +188,7 @@ function App() {
   //LOGIN API
 
   const register = (user) => {
+    // user={username, password}
     setUrlRequest({
       url: "/register",
       request: {
@@ -284,6 +288,7 @@ function App() {
   if (state.loading) {
     messageArea = <h4>Loading...</h4>;
   }
+  // show messages from state.error for instance "Register success"
   if (state.error) {
     messageArea = <h4>{state.error}</h4>;
   }

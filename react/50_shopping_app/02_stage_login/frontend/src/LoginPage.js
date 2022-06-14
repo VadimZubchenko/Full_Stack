@@ -1,7 +1,10 @@
 import { useState } from "react";
 
 const LoginPage = (props) => {
-  const [state, setState] = useState({ username: "", password: "" });
+  const [state, setState] = useState({
+    username: "",
+    password: "",
+  });
 
   const onChange = (event) => {
     setState((state) => {

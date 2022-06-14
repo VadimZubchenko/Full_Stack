@@ -6,10 +6,9 @@ import Navbar from "./components/Navbar";
 import { Routes, Route } from "react-router-dom";
 // remember not to call callBack directly here,
 // because this render already finished making changes
-// therefore called with fetch, see below
+// therefore is called with fetch, see below
 function App() {
   // here two differents states (state and urlRequest)
-
   const [state, setState] = useState({
     list: [],
   });
@@ -93,7 +92,7 @@ function App() {
     fetchData();
     // ,[] – dependency array
     // [empty] the hook will only trigger once when the component is first rendered.
-    // hook will trigger if any element of the dependency array changes:
+    // hook will trigger if any element of the dependency array changes like componentDidChange()
   }, [urlRequest.url, urlRequest.request, urlRequest.action]);
 
   const getShoppingList = () => {
