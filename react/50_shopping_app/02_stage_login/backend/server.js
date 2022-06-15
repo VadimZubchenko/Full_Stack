@@ -28,16 +28,21 @@ createToken = () => {
   let token = crypto.randomBytes(128);
   return token.toString("hex"); //hexaluku 1..9A....F
 };
+
 // FILTER for DATABASE PASSING, check do you have key(token)
+
 isUserLogged = (req, res, next) => {
   if (!req.headers.token) {
     return res.status(403).json({ message: "Forbidden 1!" });
   }
   for (let i = 0; i < loggedSessions.length; i++) {
     // check is session just token
+
     if (req.headers.token === loggedSessions[i].token) {
       let now = Date.now();
+
       // check is session just time of session, which was put while login
+
       if (now > loggedSessions[i].ttl) {
         //ttl: see below
         // delete session if time is out, splice remove 1 element from []
@@ -142,7 +147,7 @@ app.post("/login", function (req, res) {
             ttl: now + time_to_life_diff,
           };
           loggedSessions.push(session);
-          return res.status(200).json({ token: token }); // why two cause in session is token:token
+          return res.status(200).json({ token: token }); //cause in session = is token:token
         }
       );
       return;

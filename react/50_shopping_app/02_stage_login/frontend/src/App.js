@@ -23,13 +23,14 @@ function App() {
   //STORAGE FUNCTIOINS
 
   useEffect(() => {
-    // for saving session on web-browser
-    if (sessionStorage.getItem(state)) {
-      // it true after case "register" and setError's saveToStorage(tempState);
+    // saving session on the web-browser gives opportunity reload page into same state
+    // without that it goes comeback to loginpage
+    // first true after case "register" and setError's saveToStorage(tempState);
+    if (sessionStorage.getItem("state")) {
       let state = JSON.parse(sessionStorage.getItem("state"));
       setState(state);
       if (state.isLogged) {
-        //after case login, it loads the ShoppList very first time with token
+        //loads the getShoppList(token) after reloading the page
         getShoppingList(state.token);
       }
     }
@@ -40,6 +41,7 @@ function App() {
   };
 
   //APP STATE FUNCTIONS
+  //differente page states for sessionStorage
 
   //update state with 'loading' status: false or true
   const setLoading = (loading) => {
@@ -92,6 +94,7 @@ function App() {
                 ...state,
                 list: data,
               };
+              // saving the page state into sessionStorage
               saveToStorage(tempState);
               return tempState;
             });
@@ -118,6 +121,7 @@ function App() {
                 isLogged: true,
                 token: token.token, // token.token, cause in session is token:token
               };
+              // saving the page state into sessionStorage
               saveToStorage(tempState);
               return tempState;
             });
@@ -227,7 +231,7 @@ function App() {
   };
 
   // REST API
-
+  // getShoppingList() or  getShoppingList(argument)
   const getShoppingList = (token) => {
     let temptoken = state.token;
     if (token) {
