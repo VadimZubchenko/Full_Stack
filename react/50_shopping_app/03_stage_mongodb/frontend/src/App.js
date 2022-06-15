@@ -26,7 +26,7 @@ function App() {
   //STORAGE FUNCTIOINS
 
   useEffect(() => {
-    if (sessionStorage.getItem(state)) {
+    if (sessionStorage.getItem("state")) {
       let state = JSON.parse(sessionStorage.getItem("state"));
       setState(state);
       if (state.isLogged) {

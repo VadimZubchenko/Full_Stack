@@ -147,6 +147,7 @@ app.post("/login", function (req, res) {
             ttl: now + time_to_life_diff,
           };
           loggedSessions.push(session);
+          //send to web the token as a ID of sesstion
           return res.status(200).json({ token: token }); //cause in session = is token:token
         }
       );
