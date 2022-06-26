@@ -57,7 +57,7 @@ const ShoppingForm = (props) => {
           type="number"
           name="price"
           id="price"
-          step="0.01"
+          step="0.1"
           className="form-control"
           onChange={onChange}
           value={state.price}

@@ -64,9 +64,18 @@ export const addItem = (token, item) => {
       body: JSON.stringify(item),
     };
     dispatch(loading());
+
     let response = await fetch("/api/shopping", request);
     dispatch(stopLoading());
     if (!response) {
+      dispatch(
+        addItemFailed(
+          "There was an error with the connection. Add new item failed"
+        )
+      );
+      return;
+    }
+    if (response.ok) {
       dispatch(addItemSuccess());
       dispatch(getList(token));
     } else {
@@ -90,18 +99,20 @@ export const removeItem = (token, id) => {
       mode: "cors",
       headers: { "Content-type": "application/json", token: token },
     };
+
     dispatch(loading());
-    let response = await fetch("/api/shopping" + id, request);
+
+    let response = await fetch("/api/shopping/" + id, request);
+
     dispatch(stopLoading());
     if (!response) {
       dispatch(
         removeItemFailed(
-          "There was and erro with the connection. Remove item failed"
+          "There was and error with the connection. Remove item failed"
         )
       );
       return;
     }
-
     if (response.ok) {
       dispatch(removeItemSuccess());
       dispatch(getList(token));
@@ -130,7 +141,7 @@ export const edit = (token, item) => {
       body: JSON.stringify(item),
     };
     dispatch(loading());
-    let response = await fetch("/api/shopping" + item.id, request);
+    let response = await fetch("/api/shopping/" + item.id, request);
     dispatch(stopLoading());
     if (!response) {
       dispatch(

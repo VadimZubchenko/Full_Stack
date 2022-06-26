@@ -134,6 +134,7 @@ app.post("/login", function (req, res) {
       .status(400)
       .json({ message: "Please provide proper credentials" });
   }
+  //get from MongoDB username of schema "User" with Mongoose query 
   userModel.findOne({ username: req.body.username }, function (err, user) {
     if (err) {
       console.log("Error in finding user in login. Reason:", err);

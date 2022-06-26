@@ -296,6 +296,8 @@ function App() {
           <LoginPage setError={setError} register={register} login={login} />
         }
       />
+      {/* Setting the path to * will act as a catch-all for any undefined URLs. 
+      This is great for a 404 error page. */}
       <Route path="*" element={<Navigate to="/" />} />
     </Routes>
   );

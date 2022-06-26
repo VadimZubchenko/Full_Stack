@@ -18,8 +18,8 @@ const port = process.env.port || 3001;
 
 let registeredUsers = [];
 let loggedSessions = [];
-// 60.0 Minutes (mins) ,if session lasts more then hour,
-//then 'you will kick out from session!'
+// 60.0 Minutes (mins) kun session kestää enemmään kuin tunti,
+//sitten 'you will kick out from session!'
 let time_to_life_diff = 3600000;
 
 //HELPERS AND MIDDLWARE
@@ -33,11 +33,14 @@ createToken = () => {
 
 isUserLogged = (req, res, next) => {
   if (!req.headers.token) {
-    return res.status(403).json({ message: "Forbidden 1!" });
+    return res
+      .status(403)
+      .json({ message: "Forbidden, there's no token in request!" });
   }
   for (let i = 0; i < loggedSessions.length; i++) {
-    // check is session just token
-
+    //
+    // check is there a session with given token
+    //
     if (req.headers.token === loggedSessions[i].token) {
       let now = Date.now();
 
@@ -47,7 +50,9 @@ isUserLogged = (req, res, next) => {
         //ttl: see below
         // delete session if time is out, splice remove 1 element from []
         loggedSessions.splice(i, 1);
-        return res.status(403).json({ message: "Forbidden 2!" });
+        return res
+          .status(403)
+          .json({ message: "Forbidden, time has been run out!" });
       }
       //start session for api/- requests from present time
       loggedSessions[i].ttl = now + time_to_life_diff;
@@ -57,7 +62,9 @@ isUserLogged = (req, res, next) => {
       return next(); // return used to ensure that the execution stops after triggering the callback.
     }
   }
-  return res.status(403).json({ message: "Forbidden 3!" });
+  return res
+    .status(403)
+    .json({ message: "Forbidden, this session is not registered!" });
 };
 
 // LOGIN API
@@ -70,19 +77,19 @@ app.post("/register", function (req, res) {
       .status(400)
       .json({ message: "Please provide proper credinteials" });
   }
-  // Tarkistaa onko luotu username ja salasana
+  // Checks if a username and password have been created
   if (!req.body.username || !req.body.password) {
     return res
       .status(400)
       .json({ message: "Please provide proper credintials" });
   }
-  // tarkista ovatko käyttäjä ja salasana riittävä pitkää
+  // check that the user and password are long enough
   if (req.body.username.length < 4 || req.body.password.length < 8) {
     return res
       .status(400)
       .json({ message: "Please provide proper credintials" });
   }
-  // ovatko username registerioitu aikasemmin in registeredUsers[]
+  // whether the username was previously registered in registeredUsers[]
   for (let i = 0; i < registeredUsers.length; i++) {
     if (req.body.username === registeredUsers[i].username) {
       return res.status(409).json({ message: "Username already in use" });
@@ -147,7 +154,8 @@ app.post("/login", function (req, res) {
             ttl: now + time_to_life_diff,
           };
           loggedSessions.push(session);
-          //send to web the token as a ID of sesstion
+          //send to web-side the token as a ID of session
+          //for diff. requests is used just token, no need password and username
           return res.status(200).json({ token: token }); //cause in session = is token:token
         }
       );
@@ -172,6 +180,7 @@ app.post("/logout", function (req, res) {
 
 //HELPERS
 // when user wants to get from "/api", checking his req by calling esUserlogged(), if it ok 'return next()' => apiroutes.js
+// just the username (req.session.user) passes to apiroutes
 app.use("/api", isUserLogged, apiroutes);
 
 app.listen(port);

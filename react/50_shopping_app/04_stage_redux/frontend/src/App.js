@@ -11,6 +11,8 @@ import { useSelector } from "react-redux";
 // koska tä render jo valmis muutokset
 // sen takian kutsutaan fetching kautta
 function App() {
+  // useSelector returns state or just selected
+  // properties from Redux 'store'
   const appState = useSelector((state) => state);
 
   //CONDITION RENDERING

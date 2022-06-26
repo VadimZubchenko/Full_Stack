@@ -66,8 +66,6 @@ export const login = (user) => {
         dispatch(loginFailed("Error parsing login information. Login failed!"));
       }
       dispatch(loginSuccess(data.token));
-      loginFailed("Login ok:" + response.status);
-
       dispatch(getList(data.token));
     } else {
       dispatch(
@@ -153,7 +151,7 @@ const loginFailed = (error) => {
 
 const logoutSuccess = () => {
   return {
-    type: LOGIN_SUCCESS,
+    type: LOGOUT_SUCCESS,
   };
 };
 const logoutFailed = (error) => {

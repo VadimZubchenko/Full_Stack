@@ -40,7 +40,7 @@ router.post("/shopping", function (req, res) {
   });
   item.save(function (err) {
     if (err) {
-      console.log("Failed to save item. Reaon:", err);
+      console.log("Failed to save item. Reason:", err);
       return res.status(500).json({ message: "Internal server error" });
     }
     return res.status(201).json({ message: "succes" });
@@ -52,7 +52,7 @@ router.post("/shopping", function (req, res) {
 
 router.delete("/shopping/:id", function (req, res) {
   itemModel.deleteOne(
-    { _id: req.params.id, user: req.session.user },
+    { _id: req.params.id, user: req.session.user }, //where req.params.id is endpoint's /:id)
     function (err) {
       if (err) {
         console.log("Failed to remove item. Reason:", err);

@@ -49,7 +49,7 @@ const EditRow = (props) => {
           type="number"
           name="price"
           id="price"
-          step="0.01"
+          step="0.1"
           onChange={onChange}
           value={state.price}
         />

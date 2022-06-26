@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import ShoppingForm from "./components/ShoppingForm";
 import ShoppingList from "./components/ShoppingList";
 import Navbar from "./components/Navbar";
-import LoginPage from "./LoginPage";
+import LoginPage from "./components/LoginPage";
 import { Routes, Route, Navigate } from "react-router-dom";
 
 function App() {
@@ -243,6 +243,7 @@ function App() {
       request: {
         method: "GET",
         mode: "cors",
+        //The token is placed in headers.
         headers: { "Content-type": "application/json", token: temptoken },
       },
       action: "getlist",
