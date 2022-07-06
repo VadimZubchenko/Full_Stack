@@ -1,10 +1,15 @@
 import { useState } from "react";
+import useAction from "../hooks/useAction";
+
 const ShoppingForm = (props) => {
+  const { add } = useAction();
+
   const [state, setState] = useState({
     type: "",
     count: 0,
     price: 0,
   });
+
   const onChange = (event) => {
     setState((state) => {
       return {
@@ -13,18 +18,20 @@ const ShoppingForm = (props) => {
       };
     });
   };
+
   const onSubmit = (event) => {
     event.preventDefault();
     let item = {
       ...state,
     };
-    props.addShoppingItem(item);
+    add(item);
     setState({
       type: "",
       count: 0,
       price: 0,
     });
   };
+
   return (
     <div style={{ width: 500, backgroundColor: "lightgreen", margin: "auto" }}>
       <form onSubmit={onSubmit} className="mb-3">
@@ -57,7 +64,7 @@ const ShoppingForm = (props) => {
           type="number"
           name="price"
           id="price"
-          step="0.1"
+          step="0.01"
           className="form-control"
           onChange={onChange}
           value={state.price}
@@ -67,4 +74,5 @@ const ShoppingForm = (props) => {
     </div>
   );
 };
+
 export default ShoppingForm;

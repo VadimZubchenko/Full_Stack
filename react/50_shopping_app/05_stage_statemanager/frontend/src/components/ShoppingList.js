@@ -1,10 +1,14 @@
 import Row from "./Row";
 import RemoveRow from "./RemoveRow";
-import { useState } from "react";
 import EditRow from "./EditRow";
+import { useState } from "react";
+import useAction from "../hooks/useAction";
+import useAppState from "../hooks/useAppState";
 
 const ShoppingList = (props) => {
-  // before cancel we need remove old one
+  const { list } = useAppState();
+  const { remove, edit } = useAction();
+
   const [state, setState] = useState({
     removeIndex: -1,
     editIndex: -1,
@@ -30,16 +34,18 @@ const ShoppingList = (props) => {
       editIndex: -1,
     });
   };
+
   const removeFromList = (id) => {
-    props.removeFromList(id);
-    cancel();
-  };
-  const editItem = (item) => {
-    props.editItem(item);
+    remove(id);
     cancel();
   };
 
-  let items = props.list.map((item, index) => {
+  const editItem = (item) => {
+    edit(item);
+    cancel();
+  };
+
+  let items = list.map((item, index) => {
     if (state.editIndex === index) {
       return (
         <EditRow
@@ -85,4 +91,5 @@ const ShoppingList = (props) => {
     </table>
   );
 };
+
 export default ShoppingList;
