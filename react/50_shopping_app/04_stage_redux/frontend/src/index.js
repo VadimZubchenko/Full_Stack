@@ -15,7 +15,9 @@ const rootReducer = combineReducers({
   login: loginReducer,
   shopping: shoppingReducer,
 });
-
+// applyMiddleware(thunk) creates a store enhancer that applies middleware to the dispatch method
+// of the Redux store. This is handy for a variety of tasks, such as expressing asynchronous actions
+//in a concise manner, or logging every action payload.
 const store = createStore(rootReducer, applyMiddleware(thunk));
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

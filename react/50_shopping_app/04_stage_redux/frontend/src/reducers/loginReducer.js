@@ -11,7 +11,7 @@ import {
 } from "../actions/loginActions";
 
 /*
-login state 
+This is 'login state'
 isLogged:boolean,
 loading:boolean,
 token:string,
@@ -19,6 +19,7 @@ error:string
 */
 
 const getInitialState = () => {
+ 
   if (sessionStorage.getItem("loginstate")) {
     let state = JSON.parse(sessionStorage.getItem("loginstate"));
     return state;
@@ -33,10 +34,11 @@ const getInitialState = () => {
 };
 
 const saveToStorage = (state) => {
+   // sessionStorage has access to the Store and so it saves current state into it
   sessionStorage.setItem("loginstate", JSON.stringify(state));
 };
 const initialState = getInitialState();
-
+// here action is used as a string: for instance "LOGIN_SUCCESS"
 const loginReducer = (state = initialState, action) => {
   console.log("loginReducer, action:", action);
   let tempState = {};
@@ -61,7 +63,7 @@ const loginReducer = (state = initialState, action) => {
         error: "Register success!",
       };
       saveToStorage(tempState);
-      return tempState;
+      return tempState; // here loginReducer() returns the state.error, see App.js if(appState.login.error)
 
     case REGISTER_FAILED:
       tempState = {

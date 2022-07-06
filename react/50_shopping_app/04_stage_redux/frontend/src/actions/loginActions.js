@@ -1,6 +1,6 @@
 import { getList, clearShoppingState } from "./shoppingActions";
 
-//Action types as constants
+//Action types as constants, which we export to others
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 export const REGISTER_FAILED = "REGISTER_FAILED";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
@@ -14,7 +14,11 @@ export const CLEAR_LOGIN_STATE = "CLEAR_LOGIN_STATE";
 //ASync action creators
 
 export const register = (user) => {
+  // 'redux-thunk' makes possible to return a function: use async (dispatch)...
+  //  as well makes possible to use dispatch("action"), 
+  // because it received dispatch method as it's argument
   return async (dispatch) => {
+    // create the object of request
     let request = {
       method: "POST",
       mode: "cors",
@@ -22,7 +26,9 @@ export const register = (user) => {
       body: JSON.stringify(user),
     };
     dispatch(loading());
+    // put url and created request object into fetch parametres
     let response = await fetch("/register", request);
+    // check response status
     if (!response) {
       dispatch(
         registerFailed(

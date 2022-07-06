@@ -40,10 +40,10 @@ router.post("/shopping", function (req, res) {
 });
 
 router.delete("/shopping/:id", function (req, res) {
-  let tempId = parseInt(req.params.id, 10);
+  let tempId = parseInt(req.params.id, 10); // params.id is ':id' in url
   for (let i = 0; i < database.length; i++) {
     if (tempId === database[i].id) {
-      if (req.session.user !== database[i].user) {
+      if (req.session.user !== database[i].user) { // if items owner is different than present owner 
         database.splice(i, 1);
         return res
           .status(409) //request conflict with the current state of the target resource

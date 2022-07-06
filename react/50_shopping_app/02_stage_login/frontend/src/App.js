@@ -243,7 +243,7 @@ function App() {
       request: {
         method: "GET",
         mode: "cors",
-        //The token is placed in headers.
+        //The token is placed into headers.
         headers: { "Content-type": "application/json", token: temptoken },
       },
       action: "getlist",
