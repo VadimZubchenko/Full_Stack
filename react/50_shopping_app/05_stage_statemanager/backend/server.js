@@ -37,6 +37,30 @@ mongoose.set("toJSON", { virtuals: true });
 //sitten 'you will kick out from session!'
 let time_to_life_diff = 3600000;
 
+App.use(session({
+	name:"fsumshopping-session",
+	resave: false,
+	secret:"MyBestSecret",
+	saveUninitialized:false,
+	cookie:{maxAge:1000*60*60},
+	store:mongoStore.create({
+	mongoUrl:"mongodb+srv://"+mongo_user+":"mongo_password+"@"+"moongo_url+
+	"/shoppingdatabase?retryWrites=ture&w=majority",
+	collectionName:"sessions"
+})
+}))
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+Passport.use("local-login", new loxalStradegy({
+	usernameField:"username",
+	passwordField:"password",
+	passReqToCallback:true
+}, function(req, username,password,done) {
+
+}));
+
 //HELPERS AND MIDDLWARE
 
 createToken = () => {
