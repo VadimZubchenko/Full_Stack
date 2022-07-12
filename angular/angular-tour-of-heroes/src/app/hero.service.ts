@@ -8,9 +8,12 @@ import { HEROES } from './mock-heroes';
   providedIn: 'root'
 })
 export class HeroService {
-
-  getHeroes(): Hero[] {
-    return HEROES;
+  
+  // Observable is async function as a async-await in node.js
+  getHeroes(): Observable<Hero[]> {
+    const heroes = of(HEROES);// of is a same as await in node.js 
+    return heroes;
   }
+  
   constructor() { }
 }

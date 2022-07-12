@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {Hero} from '../hero';
-import { HEROES } from '../mock-heroes';
 import { HeroService } from '../hero.service'
 
 
@@ -12,12 +11,6 @@ import { HeroService } from '../hero.service'
 })
 export class HeroesComponent implements OnInit {
 
-  // hero = 'Windstorm'
- hero: Hero = {
-    id: 1,
-    name: 'Windstorm'
-  }; 
-
   heroes: Hero[] = [];
   
   selectedHero?: Hero;
@@ -27,9 +20,8 @@ export class HeroesComponent implements OnInit {
   }
 
   getHeroes(): void {
-    this.heroes = this.heroService.getHeroes();
+    this.heroService.getHeroes().subscribe(heroes => this.heroes = heroes); // lambda func is a same as anonymyos func. 
   }
-  
   constructor(private heroService: HeroService) {
 
    }
