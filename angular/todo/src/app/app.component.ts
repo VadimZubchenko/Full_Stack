@@ -1,12 +1,15 @@
 import { Component } from '@angular/core';
+import {Item} from './item';
 
 @Component({
   selector: 'app-root',
+  // следующие метаданные определяют расположение других частей компонента
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 
 export class AppComponent {
+  
   title = 'todo';
 
   filter: 'all' | 'active' | 'done' = 'all';
@@ -31,5 +34,9 @@ export class AppComponent {
       done: false
     });
   }
+
+  remove(item: Item) {
+  this.allItems.splice(this.allItems.indexOf(item), 1);
+}
 
 }
