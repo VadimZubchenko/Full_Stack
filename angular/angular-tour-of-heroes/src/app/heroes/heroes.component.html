@@ -1,4 +1,53 @@
-<h2>My Heroes</h2>
+<!-- {{data}} for binding to the new hero property. -->
+<!-- 
+  <h2>Hero: {{heroVadim.name | uppercase}} Details:</h2>
+  
+  <div><span>id: {{heroVadim.id}}</span></div>
+  <div><input id="name" [(ngModel)]="heroVadim.name" placeholder="name"></div> -->
+
+<!-- <h2>My HEROES II</h2>
+  <ul class="heroes2">
+    <li *ngFor="let hero of heroes2">
+      <button [class.selected]="hero === selectedHero" type="button" (click)="onSelect(hero)">
+        <span class="badge">{{hero.id}}</span>
+        <span class="name">{{hero.name}}</span>
+      </button>
+    </li>
+  </ul>
+
+
+<div *ngIf="selectedHero">
+  <h2>{{selectedHero.name | uppercase}} Details</h2>
+  <div>id: {{selectedHero.id}}</div>
+  <div>
+    <label for="hero-name">Hero name: </label>
+    <input id="hero-name" [(ngModel)]="selectedHero.name" placeholder="name">
+  </div>
+</div>
+ -->
+
+<!-- ******************************************************************************* -->
+
+<div>
+  <label for="new-hero">Hero name: </label>
+  <input id="new-hero" #heroName />
+
+  <!-- (click) passes input value to add() and then clears the input -->
+  <button type="button" class="add-button" (click)="add(heroName.value); heroName.value=''">
+    Add hero
+  </button>
+</div>
+
+<ul class="heroes">
+  <li *ngFor="let hero of heroes">
+    <a routerLink="/detail/{{hero.id}}">
+      <span class="badge">{{heroes.indexOf(hero)+1}}</span> {{hero.name}}
+    </a>
+    <button type="button" class="delete" title="delete hero"
+      (click)="delete(hero)">x</button>
+  </li>
+</ul>
+<!-- <h2>My Heroes</h2>
 <ul class="heroes">
   <li *ngFor="let hero of heroes">
     <button [class.selected]="hero === selectedHero" type="button" (click)="onSelect(hero)">
@@ -8,8 +57,8 @@
   </li>
 </ul>
 
-<!-- heroes.component.html (HeroDetail binding) -->
-<app-hero-detail [hero]="selectedHero"></app-hero-detail>
+heroes.component.html (HeroDetail binding)
+ <app-hero-detail [hero]="selectedHero"></app-hero-detail> -->
 
 <!-- <div *ngIf="selectedHero">
   <h2>{{selectedHero.name | uppercase}} Details</h2>
