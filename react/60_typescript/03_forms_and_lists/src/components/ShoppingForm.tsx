@@ -31,6 +31,7 @@ const ShoppingForm:React.FC<Props> = (props:Props) => {
   const onSubmit = (event:React.SyntheticEvent)=>{
     event.preventDefault();
     let item = new ShoppingItem(0, state.type, state.count, state.price);
+    // tästä alkaa: käynnistää addItem on app.tsx puolella
     props.addItem(item);
     setState({
       type:"",

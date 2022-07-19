@@ -9,7 +9,7 @@ interface AppState {
 interface FetchState {
 	request:Request
 }
-
+// initialState on AppState tyypellä, jonka objekti on tyhjä alussa
 const initialState:AppState = {
 	list:[],
 	loading:false
@@ -41,7 +41,7 @@ const listReducer = (state:AppState,action:Action) => {
 			return state;
 	}
 }
-// (): [....type...] näin asennetaan typpeja
+// (): [....type...] näin asennetaan typpeja jokaiseen arraylistan elementiin in App.tsx
 export const useAction = ():[ShoppingItem[],boolean,() => void, (item:ShoppingItem) => void, (id:number | string) => void, (item:ShoppingItem) => void] => {
 	
 	const [urlRequest,setUrlRequest] = useState<FetchState>({

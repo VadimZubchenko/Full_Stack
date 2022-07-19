@@ -5,6 +5,7 @@ interface Props {
   header:ReactNode;
   media?:ReactNode;
   content:ReactNode;
+  vadim?:ReactNode;
 }
 
 const NamedChildren:React.FC<Props> = (props:Props) => {
@@ -21,6 +22,7 @@ const NamedChildren:React.FC<Props> = (props:Props) => {
       <div>{props.header}</div>
         {props.media ? <div>{props.media}</div> : <></>}
       <div>{props.content}</div>
+      <div>{props.vadim}</div>
     </div>
   )
 }

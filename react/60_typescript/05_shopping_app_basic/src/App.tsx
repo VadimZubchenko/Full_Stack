@@ -16,7 +16,7 @@ function App() {
   return (
     <div className="App">
       {header}
-      <ShoppingForm addItem={addItem}/>
+      <ShoppingForm addItem={addItem}/> // kun addItem käynnistyy, se kutsuu Action addItem from useAction
       <hr/>
       <ShoppingList list={list} removeItem={removeItem} editItem={editItem}/>
     </div>

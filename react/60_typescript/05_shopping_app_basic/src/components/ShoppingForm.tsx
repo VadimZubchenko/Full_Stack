@@ -1,6 +1,7 @@
 import React,{useState} from 'react';
 import ShoppingItem from '../models/ShoppingItem';
 
+// luodaan props type
 interface Props {
 	addItem(item:ShoppingItem):void
 }
@@ -30,8 +31,11 @@ const ShoppingForm:React.FC<Props> = (props:Props) => {
 	
 	const onSubmit = (event:React.SyntheticEvent) => {
 		event.preventDefault();
+		// luodaan olion ja täytetään sen argumenteillä käyttäen state
 		let item = new ShoppingItem(0,state.type,state.count,state.price);
+		// käynistetään propsin kautta yläfunktion app.tsx addItem funktion
 		props.addItem(item);
+		// resetoidaan state 
 		setState({
 			type:"",
 			count:0,

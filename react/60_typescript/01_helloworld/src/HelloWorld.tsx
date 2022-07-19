@@ -3,7 +3,7 @@ import React from "react";
 interface Props{
   name?:string
 }
-// käytetään interface:a typea 
+// käytetään interface:a <typea> 
 const HelloWorld: React.FC<Props> = (props:Props) => {
   let name: string = "World";
   if(props.name){
