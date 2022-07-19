@@ -1,6 +1,9 @@
 import React,{useState} from 'react';
 import ShoppingItem from '../models/ShoppingItem';
 import Row from './Row';
+import RemoveRow from './RemoveRow';
+import EditRow from './EditRow';
+
 
 interface Props {
 	list:ShoppingItem[];
@@ -52,6 +55,16 @@ const ShoppingList:React.FC<Props> = (props:Props) => {
 	}
 	
 	let items = props.list.map((item,index) => {
+    if(state.removeIndex === index){
+      return (
+        <RemoveRow key={item.id} item={item} removeItem={removeItem} cancel={cancel}/>
+      )
+    }
+    if(state.editIndex === index){
+      return (
+        <EditRow key={item.id} item={item} editItem={editItem} cancel={cancel}/>
+      )
+    }
 		return(
 			<Row item={item} index={index} handleButtons={handleButtons}/>
 		)
