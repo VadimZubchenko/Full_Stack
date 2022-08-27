@@ -1,15 +1,16 @@
 import React from "react";
 
 const GreetFunc = (props) => {
-  const showText = "This text is shown as a second children.";
+  const showText = "The text below is a second children.";
   return (
     <div>
       <p>
-        Hello {props.name} : {props.surname}
+        Hello {props.name} {props.surname} and Hello {props.message}
       </p>
       {props.children}
-      <hr />
+      <br />
       {showText}
+      <hr />
     </div>
   );
 };

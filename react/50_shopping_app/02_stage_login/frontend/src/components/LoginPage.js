@@ -1,11 +1,12 @@
 import { useState } from "react";
-
+// Controlled components (form handling)
 const LoginPage = (props) => {
   const [state, setState] = useState({
     username: "",
     password: "",
   });
-
+  //define method 'onChangeas' a property, that is equal as an arrow function,
+  //where 'event' is passed as a parameter
   const onChange = (event) => {
     setState((state) => {
       return {
@@ -33,6 +34,8 @@ const LoginPage = (props) => {
       props.login(user);
     }
   };
+  //this is just for changing the state.username and state.password to username abd password.
+  const { username, password } = state;
   return (
     <div style={{ width: 500, backgroundColor: "lightgreen", margin: "auto" }}>
       <form className="mb-3">
@@ -45,7 +48,7 @@ const LoginPage = (props) => {
           id="username"
           className="form-control"
           onChange={onChange}
-          value={state.username}
+          value={username}
         />
         <label htmlFor="password" className="form-label">
           Password
@@ -56,7 +59,7 @@ const LoginPage = (props) => {
           id="password"
           className="form-control"
           onChange={onChange}
-          value={state.password}
+          value={password}
         />
         <button className="btn btn-primary" name="register" onClick={onSubmit}>
           Register
