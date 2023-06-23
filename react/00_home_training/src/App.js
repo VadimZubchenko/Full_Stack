@@ -28,8 +28,8 @@ function App() {
       </GreetFunc>
       <GreetClass name="Vadim Zubchenko" />
       <GreetClass name="Tatiana Zaitseva" />
-      <GreetClass name="Artur Zubchenko" />
-      <ClassState name="name" surname="surname" /> */}
+      <GreetClass name="Artur Zubchenko" />*/}
+      <ClassState name="name" surname="surname" />
       <FuncState />
       <UseStateHook />
     </div>

@@ -9,7 +9,7 @@ class ClassState extends Component {
     };
     this.exit = this.exit.bind(this);
   }
-  //defined arrow function as a property of class
+  //define arrow function as a property of class
   changeUser = () => {
     this.setState({
       name: "Vadim",
@@ -31,7 +31,7 @@ class ClassState extends Component {
           {this.state.name} {this.state.surname}
         </h1>
         <button onClick={this.changeUser}>Enter</button>
-        <br />
+
         <button onClick={this.exit}>Exit</button>
       </div>
     );

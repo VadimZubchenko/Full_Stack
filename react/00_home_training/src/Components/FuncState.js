@@ -2,8 +2,8 @@ import React, { useState } from "react";
 
 function FuncState() {
   const [state, setState] = useState({
-    message_1: "Message 1 of useState.",
-    message_2: "Message 2 of useState.",
+    message_1: "Message 1.",
+    message_2: "Message 2.",
   });
 
   const change = () => {

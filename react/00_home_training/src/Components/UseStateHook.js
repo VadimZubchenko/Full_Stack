@@ -4,9 +4,10 @@ const UseStateHook = () => {
   const initialCount = 0;
   const [count, setCount] = useState(initialCount);
 
+  //define arrow function as a property of class 'increment = ...'
   const increment5 = () => {
     for (let i = 0; i < 5; i++) {
-      setCount((prevState) => prevState + 1);
+      setCount((prevCount) => prevCount + 1);
     }
   };
 
