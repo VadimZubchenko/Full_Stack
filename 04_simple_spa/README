@@ -1,6 +1,6 @@
-# About App works.
+## About App works.
 
-App creats database on runtime, so it's data don't save permanently.
+App creats database at run-time, so it's data don't save permanently.
 User enters data using a form
 After submiting data will be added to a table.
 The table is present on the same page under the form.
