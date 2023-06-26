@@ -12,20 +12,20 @@ createForm = () => {
   let form = document.createElement("form");
   form.setAttribute("id", "form"); //<form id="form">
 
-  //first name input <input type= name= id= ><input/>
+  //creating <input type="text" name="firstnameinput" id="firstnameinput">
   let firstnameinput = document.createElement("input");
   firstnameinput.setAttribute("type", "text");
   firstnameinput.setAttribute("name", "firstnameinput");
   firstnameinput.setAttribute("id", "firstnameinput");
-  //<label type name id><label/>
+  //<label id="firstnamelabel" for="firstnameinput"><label/>
   let firstnamelabel = document.createElement("label");
   firstnamelabel.setAttribute("id", "firstnamelabel");
   firstnamelabel.setAttribute("for", "firstnameinput");
-  //next writes a name of 'label' element, so the name will be input's vieress
+  //next write text inside <label>First name</label> element and append it to label.
   let firstnametext = document.createTextNode("First name");
   firstnamelabel.appendChild(firstnametext);
 
-  //last name input <input type name id><input/>
+  //lastname input <input .....
   let lastnameinput = document.createElement("input");
   lastnameinput.setAttribute("type", "text");
   lastnameinput.setAttribute("name", "lastnameinput");
@@ -64,11 +64,11 @@ createForm = () => {
   //submit Button
   let submitbutton = document.createElement("input");
   submitbutton.setAttribute("type", "submit");
-  submitbutton.setAttribute("value", "Add");
+  submitbutton.setAttribute("value", "Add"); // name of button
   submitbutton.setAttribute("id", "submitbutton");
 
-  //Append to form, lomakkeen rakentamiseen yllä olevista elementeistä input, submitbutton
-  let br = document.createElement("br");
+  //Append all above html elements to form, lomakkeen rakentamiseen yllä olevista elementeistä input, submitbutton
+  let br = document.createElement("br"); // break row: is used to switch lines down each other
   form.appendChild(firstnamelabel);
   form.appendChild(firstnameinput);
   form.appendChild(br);
@@ -119,7 +119,7 @@ addToList = async () => {
     phone: phone.value,
   };
 
-  // how to make basic request to server to load(POST) database data into it and edit(PUT)
+  // making basic request to server for loading(POST) database data into it and edit(PUT)
   let method = "POST";
   let url = "/api/contact";
   // '0' is false in JS, client ID start from '100'
@@ -150,12 +150,12 @@ addToList = async () => {
       let submitbutton = document.getElementById("submitbutton");
       submitbutton.value = "Add";
     }
-    //getContactList();
+    getContactList();
   } else {
     console.log("Server responded with a status:", response.status);
   }
 };
-
+//getContactList();
 getContactList = async () => {
   let request = {
     method: "GET",

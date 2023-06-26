@@ -13,8 +13,9 @@ function changeColor() {
 }
 
 function toggleBox() {
+  // get button element in html
   let domButton = document.getElementById("dombutton");
-  // get div node from DOM-html
+  // get div element from DOM-html
   let anchor = document.getElementById("anchor");
   if (domButton.value === "Show") {
     domButton.value = "Hide";
@@ -25,7 +26,7 @@ function toggleBox() {
     box.style.backgroundColor = "red";
     //put the id into the "div"
     box.id = "redbox";
-    // Append the box node to the "div" node:
+    // Append the "div" box node to the "p" node 'anchor':
     anchor.appendChild(box);
   } else {
     domButton.value = "Show";
