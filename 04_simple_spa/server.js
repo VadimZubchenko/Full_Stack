@@ -5,7 +5,7 @@ const res = require("express/lib/response");
 let app = express();
 
 let port = process.env.port || 3000;
-//Create a database
+//Creating a database as a simple array, which live lasts just on app run-time
 let database = [];
 let id = 100;
 
@@ -21,7 +21,7 @@ app.get("/api/contact", function (req, res) {
   return res.status(200).json(database);
 });
 
-// This is backEnd side, express made it like event, so it appear when it's required
+// This is backEnd side, express mades it like event, so it appear when it's required
 // REST architectural style and allows for interaction with RESTful web services.
 // app.get app.post(create), app.put(edit), app.delete
 app.post("/api/contact", function (req, res) {
