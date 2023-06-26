@@ -1,10 +1,11 @@
-About App works. 
+# About App works.
 
 App creats database on runtime, so it's data don't save permanently.
-User inputs data using form and after submiting will get table with it. 
-Table is present on the same page under the form. 
-User can remove or edit data in database using button Remove and Edit right side of table lines. 
-The table data is refreshed data after it's deleting or editing. 
+User enters data using a form
+After submiting data will be added to a table.
+The table is present on the same page under the form.
+User can remove or edit data in database using button Remove and Edit right side of table lines.
+The table data is updated after deletion or editing.
 For UI example see user_inerface.png.
 
 06.2023.
