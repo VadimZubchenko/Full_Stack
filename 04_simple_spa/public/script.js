@@ -3,8 +3,6 @@ window.onload = function () {
   createForm();
   //getContactList();
 };
-// '0' means a false in JS
-var mode = 0;
 
 // nuolifunktio
 createForm = () => {
@@ -102,16 +100,22 @@ createForm = () => {
 
   anchor.appendChild(form);
 };
+
+/*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< HTTP requests >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+// '0' means a false in JS
+var mode = 0;
 //async makes a function return a Promise,
 //it waits when client puts the data to the form
 //and press commitButton
 addToList = async () => {
-  // data from input form moves to own variabels
+  // take data from inputs form moves to variabels
   let firstname = document.getElementById("firstnameinput");
   let lastname = document.getElementById("lastnameinput");
   let email = document.getElementById("emailinput");
   let phone = document.getElementById("phoneinput");
-  // here we make a object from goten data from input
+  // here we make a object from goten data from input 'data.value'
   let contact = {
     firstname: firstname.value,
     lastname: lastname.value,
@@ -137,9 +141,9 @@ addToList = async () => {
   // tässä lähetetään yllä valmistetty pyynnön(fetch(url, request)) ja odotan vastausta(response) serverilta async-lla
   //(fetch () выполняется асинхронно без блокировки,
   //выполнение кода продолжается после кода, связанного с промисом
-  let response = await fetch(url, request); //await makes a function wait for a Promise.
+  let response = await fetch(url, request); //'await' makes a function wait for promise.
   if (response.ok) {
-    // responsen (when data is succefully moved to server,
+    // respons ok when data is succefully moved to server,
     //sen jälkeen tyhjennetaan formia, että tuleville käytäjälle se tulee tyhjää.
     firstname.value = "";
     lastname.value = "";
@@ -155,7 +159,7 @@ addToList = async () => {
     console.log("Server responded with a status:", response.status);
   }
 };
-//getContactList();
+
 getContactList = async () => {
   let request = {
     method: "GET",
@@ -212,7 +216,7 @@ changeToEditMode = (contact) => {
 populateTable = (data) => {
   let anchor = document.getElementById("anchor");
   let oldTable = document.getElementById("table");
-  // remove before made table if it exist, oldTable = true
+  // remove before created table, if it exist, oldTable = true
   if (oldTable) {
     anchor.removeChild(oldTable);
   }
@@ -222,10 +226,10 @@ populateTable = (data) => {
   let header = document.createElement("thead");
   let headerRow = document.createElement("tr"); //The tr(table row) element defines a row in a table:
 
-  // next lines to show a client id on web
-  //let clientId = document.createElement("th"); //<th> tag defines a header cell in an HTML table. Bold and centered
-  //let clientIdtext = document.createTextNode(" id ");
-  //clientId.appendChild(clientIdtext);
+  // uncomment lines below to show a client id on web
+  /* let clientId = document.createElement("th"); //<th> tag defines a header cell in an HTML table. Bold and centered
+  let clientIdtext = document.createTextNode(" id ");
+  clientId.appendChild(clientIdtext); */
 
   let firstnameheader = document.createElement("th"); //<th> tag defines a header cell in an HTML table. Bold and centered
   let firstnametext = document.createTextNode("First Name");
@@ -252,6 +256,7 @@ populateTable = (data) => {
   editheader.appendChild(edittext);
 
   //headerRow.appendChild(clientId); to see 'id' in html
+  //headerRow.appendChild(clientId);
   headerRow.appendChild(firstnameheader);
   headerRow.appendChild(lastnameheader);
   headerRow.appendChild(emailheader);
