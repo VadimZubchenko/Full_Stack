@@ -10,11 +10,13 @@ For UI example see user_inerface.png.
 
 #Show id in a table on web-side
 Uncomment lines below to present 'id' in table on web
+
+<!--
 230 let clientId = document.createElement("th");
 231 let clientIdtext = document.createTextNode(" id ");
-232 clientId.appendChild(clientIdtext);
+232 clientId.appendChild(clientIdtext);-->
 
-259 headerRow.appendChild(clientId);
+<!-- 259 headerRow.appendChild(clientId); -->
 
 Comment line below to present 'id' in table on web
 278 if (x === "id")
