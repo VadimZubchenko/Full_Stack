@@ -1,7 +1,7 @@
 const express = require("express");
 //alustetaan express
 const app = express();
-// turvallisuuden vuouksi käytetään asenettu porti, jos ei sitten default 3000
+// turvallisuuden vuouksi käytetään asenettu portti, jos ei, sitten default 3000
 let port = process.env.PORT || 3000;
 
 // vain 2 comment app.use tai app.config asennetaan käytettäväksi publicissa olevaa dataa

@@ -38,7 +38,9 @@ const ShoppingList = (props) => {
     props.editItem(item);
     cancel();
   };
-
+  //The map() method calls a provided callbackFn function,
+  //callbackFn includes 3 arguments .map((element, index, array),
+  //where the array is what map() called (list)
   let items = props.list.map((item, index) => {
     if (state.editIndex === index) {
       return (

@@ -5,7 +5,7 @@ const LoginPage = (props) => {
     username: "",
     password: "",
   });
-  //define method 'onChangeas' a property, that is equal as an arrow function,
+  //define method 'onChange' as a property, that is equal as an arrow function,
   //where 'event' is passed as a parameter
   const onChange = (event) => {
     setState((state) => {
@@ -24,6 +24,7 @@ const LoginPage = (props) => {
       );
       return;
     }
+    // create object user from values of state
     let user = {
       username: state.username,
       password: state.password,
@@ -34,7 +35,7 @@ const LoginPage = (props) => {
       props.login(user);
     }
   };
-  //this is just for changing the state.username and state.password to username abd password.
+  //this is just for changing in return() the state.username and state.password to username and password.
   const { username, password } = state;
   return (
     <div style={{ width: 500, backgroundColor: "lightgreen", margin: "auto" }}>

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-
+// Navbar gets App component's functioins via props
 const Navbar = (props) => {
-  let links = <ul className="navbar-nav"></ul>;
+  let links = <ul className="navbar-nav"></ul>; // ul- unordered list
   if (props.isLogged) {
     links = (
       <ul className="navbar-nav">

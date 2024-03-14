@@ -5,7 +5,7 @@ const express = require("express");
 const apiroutes = require("./routes/apiroutes");
 //for changing a password to hash code
 const bcrypt = require("bcrypt");
-//for creationg token
+//for creating token
 const crypto = require("crypto");
 
 let app = express();
@@ -110,10 +110,10 @@ app.post("/register", function (req, res) {
   });
 });
 
-//here tartkistetaan username ja salasana
+//here tarkistetaan username ja salasana
 //and every time when user login we make token for this particular session(username, token) of this particular user
 app.post("/login", function (req, res) {
-  //to check req.body empty or not in node ,express?
+  //to check req.body empty or not in nodeJS express?
   if (!req.body) {
     return res
       .status(400)
@@ -179,7 +179,7 @@ app.post("/logout", function (req, res) {
 });
 
 //HELPERS
-// when user wants to get from "/api", checking his req by calling esUserlogged(), if it ok 'return next()' => apiroutes.js
+// when user wants to get from "/api", checking his req by calling isUserlogged(), if it ok 'return next()' => apiroutes.js
 // just the username (req.session.user) passes to apiroutes
 app.use("/api", isUserLogged, apiroutes);
 

@@ -1,10 +1,10 @@
 import "./App.css";
 import { useState, useEffect } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
 import ShoppingForm from "./components/ShoppingForm";
 import ShoppingList from "./components/ShoppingList";
 import Navbar from "./components/Navbar";
 import LoginPage from "./components/LoginPage";
-import { Routes, Route, Navigate } from "react-router-dom";
 
 function App() {
   const [state, setState] = useState({
@@ -21,11 +21,11 @@ function App() {
   });
 
   //STORAGE FUNCTIOINS
-
+  //Runs only on the first render, because => }, []);
   useEffect(() => {
     // saving session on the web-browser gives opportunity reload page into same state
     // without that it goes comeback to loginpage
-    // first true after case "register" and setError's saveToStorage(tempState);
+    // first 'true' will be just after case of action: "register" and setError's saveToStorage(tempState);
     if (sessionStorage.getItem("state")) {
       let state = JSON.parse(sessionStorage.getItem("state"));
       setState(state);
@@ -43,7 +43,7 @@ function App() {
   //APP STATE FUNCTIONS
   //differente page states for sessionStorage
 
-  //update state with 'loading' status: false or true
+  //update state with 'loading' status as a argument: false or true
   const setLoading = (loading) => {
     setState((state) => {
       return {
@@ -53,7 +53,8 @@ function App() {
       };
     });
   };
-
+  //update state with passing message as a argument
+  //and save state into sessionStorage
   const setError = (error) => {
     setState((state) => {
       let tempState = {
@@ -82,7 +83,8 @@ function App() {
       if (!urlRequest.url) {
         return;
       }
-      setLoading(true); // messageArea shows <h4>Loading<h4> see below Condition rendering
+      //next one changes a state without rendering!
+      setLoading(true); //return 'messageArea' with <h4>Loading...<h4> see below Condition rendering
       let response = await fetch(urlRequest.url, urlRequest.request);
       setLoading(false);
       if (response.ok) {
@@ -109,23 +111,23 @@ function App() {
             getShoppingList();
             return;
           case "register":
-            setError("Register success"); // methood upddates STATE with error: "Register succes" and first time saveToStorage see above
+            setError("Register success"); // methood updates STATE with error: "Register succes" and first time saveToStorage see above
             return;
           case "login":
-            let token = await response.json();
+            let resp = await response.json();
             setState((state) => {
               // isLogged == true ,state.isLogged changes to true, see above
               // which opens other tempRender page, see below
               let tempState = {
                 ...state,
                 isLogged: true,
-                token: token.token, // token.token, cause in session is token:token
+                token: resp.token, //because in resp. the token is under name 'token'
               };
               // saving the page state into sessionStorage
               saveToStorage(tempState);
               return tempState;
             });
-            getShoppingList(token.token);
+            getShoppingList(resp.token);
             return;
           case "logout":
             clearState();
@@ -193,6 +195,7 @@ function App() {
 
   const register = (user) => {
     // user={username, password}
+    // change state of 'urlRequest' and triggers component updating with useEffect()
     setUrlRequest({
       url: "/register",
       request: {
@@ -288,15 +291,16 @@ function App() {
   };
 
   //CONDITION RENDERING
-
+  // the message will show every rendering while state error parameter change for instance "Register success" or empty"..."
   let messageArea = <h4></h4>;
   if (state.loading) {
     messageArea = <h4>Loading...</h4>;
   }
-  // show messages from state.error for instance "Register success"
+
   if (state.error) {
     messageArea = <h4>{state.error}</h4>;
   }
+
   let tempRender = (
     <Routes>
       <Route
